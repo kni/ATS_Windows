@@ -1,0 +1,65 @@
+name: ATS2 MSYS2
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    defaults:
+      run:
+        shell: msys2 {0}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup MSYS2
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: true
+          install: >-
+            mingw-w64-x86_64-gcc
+            mingw-w64-x86_64-gmp
+            make
+            git
+            tar
+
+      # Cache
+      - name: Cache ATS2 Binaries
+        id: cache-ats2
+        uses: actions/cache@v4
+        with:
+          path: /opt/ats2
+          key: ${{ runner.os }}-ats2-v0.4.2
+
+      - name: Install ATS2 (only if not cached)
+        if: steps.cache-ats2.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p /opt/ats2
+          curl -L https://github.com/githwxi/ATS-Postiats/archive/refs/tags/v0.4.2.tar.gz -o ats2.tar.gz
+          tar -xzf ats2.tar.gz --strip-components=1 -C /opt/ats2
+          cd /opt/ats2
+          make -f Makefile_build all
+
+      # Environment
+      - name: Set ATS2 Environment
+        run: |
+          echo "PATSHOME=/opt/ats2" >> $GITHUB_ENV
+          echo "/opt/ats2/bin" >> $GITHUB_PATH
+
+      - name: Verify Installation
+        run: patscc --version
+
+      - name: Build My Project
+        run: |
+          patscc -o ats_app.exe main.dats
+
+      # Artifact
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-ats-binary
+          path: my_ats_app.exe
+          if-no-files-found: error
