@@ -38,10 +38,10 @@ jobs:
         if: steps.cache-ats2.outputs.cache-hit != 'true'
         run: |
           mkdir -p /opt/ats2
-          curl -L https://github.com/githwxi/ATS-Postiats/archive/refs/tags/v0.4.2.tar.gz -o ats2.tar.gz
+          curl -L https://master.dl.sourceforge.net/project/ats2-lang/ats2-lang/ats2-postiats-0.4.2/ATS2-Postiats-int-0.4.2.tgz -o ats2.tar.gz
           tar -xzf ats2.tar.gz --strip-components=1 -C /opt/ats2
           cd /opt/ats2
-          make -f Makefile_build all
+          make all
 
       # Environment
       - name: Set ATS2 Environment
