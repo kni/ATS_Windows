@@ -71,7 +71,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: windows-ats-binary
-          path: my_ats_app.exe
+          path: |
+            my_ats_app.exe
+            /usr/bin/msys-2.0.dll
           if-no-files-found: error
 
       - name: Prepare Release Artifacts
