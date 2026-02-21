@@ -50,7 +50,7 @@ jobs:
         run: |
           echo "PATSHOME=/opt/ats2" >> $GITHUB_ENV
           echo "/opt/ats2/bin" >> $GITHUB_PATH
-          echo "/opt/ats2" >> $PATSHOME
+          set PATSHOME="/opt/ats2"
           echo $PATH
           echo $GITHUB_PATH
           echo $PATSHOME
