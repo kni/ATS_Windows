@@ -24,7 +24,7 @@ jobs:
             base-devel
             mingw-w64-x86_64-toolchain
             mingw-w64-x86_64-gmp
-            mingw-w64-x86_64-cl
+            mingw-w64-x86_64-gc
 
       # Cache
       - name: Cache ATS2 Binaries
@@ -53,7 +53,7 @@ jobs:
 
       - name: Verify Installation
         run: |
-          ldd /opt/ats2/bin/patscc
+          ldd /opt/ats2/lib/ats2-postiats-0.4.2/bin/patscc
           patscc
 
       - name: Build My Project
