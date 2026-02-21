@@ -52,7 +52,7 @@ jobs:
           echo "/opt/ats2/bin" >> $GITHUB_PATH
 
       - name: Verify Installation
-        run: patscc --version
+        run: patscc
 
       - name: Build My Project
         run: |
