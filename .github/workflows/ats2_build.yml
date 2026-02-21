@@ -22,9 +22,9 @@ jobs:
           path-type: inherit
           install: >-
             base-devel
-            gcc
-            gmp-devel
-            libgc-devel
+            mingw-w64-x86_64-toolchain
+            mingw-w64-x86_64-gmp
+            mingw-w64-x86_64-boehmgcl
 
       # Cache
       - name: Cache ATS2 Binaries
@@ -52,7 +52,9 @@ jobs:
           echo "/opt/ats2/bin" >> $GITHUB_PATH
 
       - name: Verify Installation
-        run: patscc
+        run: |
+          ldd /opt/ats2/bin/patscc
+          patscc
 
       - name: Build My Project
         run: |
