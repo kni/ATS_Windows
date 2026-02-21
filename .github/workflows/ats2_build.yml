@@ -24,7 +24,7 @@ jobs:
             base-devel
             mingw-w64-x86_64-toolchain
             mingw-w64-x86_64-gmp
-            mingw-w64-x86_64-boehmgcl
+            mingw-w64-x86_64-cl
 
       # Cache
       - name: Cache ATS2 Binaries
