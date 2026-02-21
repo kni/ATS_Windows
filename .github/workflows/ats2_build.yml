@@ -50,26 +50,29 @@ jobs:
         run: |
           echo "PATSHOME=/opt/ats2" >> $GITHUB_ENV
           echo "/opt/ats2/bin" >> $GITHUB_PATH
+          echo "/opt/ats2" >> $PATSHOME
           echo $PATH
           echo $GITHUB_PATH
+          echo $PATSHOME
 
       - name: Verify Installation
         run: |
           ldd /opt/ats2/lib/ats2-postiats-0.4.2/bin/patscc
-#          patscc < /dev/null
-#          patscc
-#
-#      - name: Build My Project
-#        run: |
-#          patscc -o ats_app.exe main.dats
-#
-#      # Artifact
-#      - name: Upload Build Artifact
-#        uses: actions/upload-artifact@v4
-#        with:
-#          name: windows-ats-binary
-#          path: my_ats_app.exe
-#          if-no-files-found: error
+          patsopt --version
+          patsopt
+          patscc -verbose -vats
+
+      - name: Build My Project
+        run: |
+          patscc -verbose -o ats_app.exe main.dats
+
+      # Artifact
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-ats-binary
+          path: my_ats_app.exe
+          if-no-files-found: error
 
       - name: Prepare Release Artifacts
         shell: msys2 {0}
