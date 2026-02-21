@@ -25,9 +25,6 @@ jobs:
             gcc
             gmp-devel
             libgc-devel
-            # mingw-w64-x86_64-toolchain
-            # mingw-w64-x86_64-gmp
-            # mingw-w64-x86_64-gc
 
       # Cache
       - name: Cache ATS2 Binaries
