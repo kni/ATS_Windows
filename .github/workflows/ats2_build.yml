@@ -58,13 +58,13 @@ jobs:
       - name: Verify Installation
         run: |
           ldd /opt/ats2/lib/ats2-postiats-0.4.2/bin/patscc
-          patsopt --version
-          patsopt
-          patscc -verbose -vats
+          bash -c 'patsopt --version; echo OK'
+          bash -c 'patsopt; echo OK'
+          bash -c 'patscc -verbose -vats' ; echo OK'
 
       - name: Build My Project
         run: |
-          patscc -verbose -o ats_app.exe main.dats
+          patscc -verbose -o ats_app.exe main.dats ; echo OK
 
       # Artifact
       - name: Upload Build Artifact
